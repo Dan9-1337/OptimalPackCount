@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input, button {
+            display: block;
+            margin: 10px 0;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Pack Calculator</h1>
+<form id="packForm">
+    <label for="items">Number of Items:</label>
+    <input type="number" id="items" name="items" required>
+    <button type="submit">Calculate</button>
+</form>
+<div id="result"></div>
+
+<script>
+    document.getElementById('packForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const items = document.getElementById('items').value;
+        fetch(`/calculate-packs?items=${items}`)
+            .then(response => response.json())
+            .then(data => {
+                let result = '<h2>Optimal Packs</h2><ul>';
+                for (const [packSize, count] of Object.entries(data)) {
+                    result += `<li>${count} x ${packSize} Items</li>`;
+                }
+                result += '</ul>';
+                document.getElementById('result').innerHTML = result;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = '<p>Error calculating packs</p>';
+            });
+    });
+</script>
+</body>
+</html>
