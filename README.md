@@ -44,29 +44,23 @@ Before you begin, ensure you have the following installed:
     docker run -p 8080:8080 optimalpackcount
     ```
 
-## Usage
+## API Documentation
 
-The application provides a RESTful API for interacting with the pack optimization logic. 
+### Calculate Packs
 
-### Example Request
+This endpoint calculates the optimal number of packs required to fulfill a given order based on the available package sizes.
 
-Send a POST request to the `/calculate` endpoint with your order details.
+- **Endpoint**: `/calculate-packs`
+- **Method**: `POST`
 
-#### Sample Curl Command:
-```bash
-curl -X POST http://localhost:8080/calculate -d '{"order": {"items": [{"type": "A", "quantity": 10}, {"type": "B", "quantity": 5}]}}'
-```
-
-### Response
-The API will return the optimal number of packs required to fulfill the order.
+#### Request Body
 ```json
 {
-  "packs": [
-    {"type": "A", "quantity": 10, "packCount": 2},
-    {"type": "B", "quantity": 5, "packCount": 1}
-  ]
+  "orderedItems": 1000,
+  "packageSizeList": [5000, 2000, 1000, 500, 250]
 }
 ```
+
 ### Project Structure
 
 `handler/`: Contains the HTTP handlers that manage incoming API requests and outgoing responses.
