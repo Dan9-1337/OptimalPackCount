@@ -7,7 +7,7 @@ COPY go.mod go.sum ./
 
 RUN go mod download
 
-COPY . .
+COPY models .
 
 RUN go build -o main .
 
